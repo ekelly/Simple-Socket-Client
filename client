@@ -1,0 +1,29 @@
+#!/usr/bin/python
+
+from optparse import OptionParser 
+
+# Parse the commandline input into a map of 
+# name to values
+def parse_input():
+    usage = "usage: %prog [options] hostname NEU_ID"
+    parser = OptionParser(usage)
+    parser.add_option("-p", "--port", dest="port", 
+            help="TCP port that the server is listening on", 
+            metavar="PORT", default=27993)
+    parser.add_option("-s", "--ssl", action="store_true", dest="ssl",
+            help="Should this client connect using ssl", default=False)
+    (options, args) = parser.parse_args()
+    if len(args) != 2:
+        parser.error("incorrect number of arguments")
+    else:
+        options.server = args[0]
+        options.neuid = args[1]
+    return options
+
+# Entry point to the program
+def main():
+    input = parse_input()
+    print str(input)
+    pass
+
+main()
