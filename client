@@ -20,10 +20,55 @@ def parse_input():
         options.neuid = args[1]
     return options
 
+# Open a socket to the server
+def open_socket():
+    return
+
+# Close the socket
+def close_socket():
+    return
+
+# Parse the socket data
+def parse_data(data):
+    return
+
+# Send data on the socket
+def send_data(data):
+    data = "cs5700fall2013 " + data + "\n"
+    return
+
+# Send the opening "hello" message to start us off
+def send_hello(neuid):
+    send_data("HELLO " + neuid)
+    return
+
+# Convert the given string representation of the number
+# to a number (int or float)
+def num(s):
+    try:
+        return int(s)
+    except exceptions.ValueError:
+        return float(s)
+
+# Calculate the mathematical solution to the problem
+def calculate_solution(left, operator, right):
+    l = num(left)
+    r = num(right)
+    return { 
+      '+': lambda: l + r,
+      '-': lambda: l - r,
+      '*': lambda: l * r,
+      '/': lambda: l / r,
+    }.get(operator, "+")()
+
 # Entry point to the program
 def main():
     input = parse_input()
+    send_hello(input.neuid)
     print str(input)
     pass
 
-main()
+# These 2 lines allow us to import this file into another file 
+# and test individual components without running it
+if __name__ == "__main__":
+    main()
