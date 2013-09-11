@@ -28,6 +28,7 @@ def open_socket(server, port):
 
 # Close the socket
 def close_socket(socket):
+    socket.close()
     return
 
 # Parse the socket data
