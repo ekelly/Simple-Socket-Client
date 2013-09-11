@@ -11,7 +11,7 @@ def parse_input():
     parser = OptionParser(usage)
     parser.add_option("-p", "--port", dest="port", 
             help="TCP port that the server is listening on", 
-            metavar="PORT", default=27993)
+            metavar="PORT")
     parser.add_option("-s", "--ssl", action="store_true", dest="ssl",
             help="Should this client connect using ssl", default=False)
     (options, args) = parser.parse_args()
@@ -20,8 +20,11 @@ def parse_input():
     else:
         options.server = args[0]
         options.neuid = args[1]
-    if options.ssl:
-        options.port = 27994
+    if options.port == None:
+        if options.ssl:
+            options.port = 27994
+        else:
+            options.port = 27993
     options.port = int(options.port)
     return options
 
@@ -82,7 +85,7 @@ def main():
             print "HOORAY"
             return
         response = parse_data(recv_data(socket))
-    close_socket()
+    close_socket(socket)
 
 # These 2 lines allow us to import this file into another file 
 # and test individual components without running it
