@@ -49,7 +49,7 @@ def recv_data(socket):
 # Send data on the socket
 def send_data(socket, data):
     print "send_data"
-    data = "cs5700fall2013 " + data + "\n"
+    data = "cs5700fall2013 " + str(data) + "\n"
     return socket.send(data)
 
 # Send the opening "hello" message to start us off
