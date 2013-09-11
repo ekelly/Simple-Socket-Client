@@ -25,7 +25,7 @@ def open_socket():
     return
 
 # Close the socket
-def close_socket():
+def close_socket(socket):
     return
 
 # Parse the socket data
@@ -33,13 +33,13 @@ def parse_data(data):
     return
 
 # Send data on the socket
-def send_data(data):
+def send_data(socket, data):
     data = "cs5700fall2013 " + data + "\n"
     return
 
 # Send the opening "hello" message to start us off
-def send_hello(neuid):
-    send_data("HELLO " + neuid)
+def send_hello(socket, neuid):
+    send_data(socket, "HELLO " + neuid)
     return
 
 # Convert the given string representation of the number
@@ -64,9 +64,9 @@ def calculate_solution(left, operator, right):
 # Entry point to the program
 def main():
     input = parse_input()
-    send_hello(input.neuid)
+    socket = open_socket()
+    send_hello(socket, input.neuid)
     print str(input)
-    pass
 
 # These 2 lines allow us to import this file into another file 
 # and test individual components without running it
