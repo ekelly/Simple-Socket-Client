@@ -23,7 +23,6 @@ def parse_input():
 
 # Open a socket to the server
 def open_socket(server, port):
-    print "open_socket: " + server + ":" + str(port)
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.settimeout(5)
     s.connect((server, port))
@@ -31,47 +30,30 @@ def open_socket(server, port):
 
 # Close the socket
 def close_socket(socket):
-    print "close_scoket"
     socket.close()
-    return
 
 # Parse the socket data
-# Byte array -> string[]
 def parse_data(data):
-    print "parse_data"
     return data.split(' ')
 
 # Receive data from the socket
 def recv_data(socket):
-    print "recv_data"
     return socket.recv(4096)
 
 # Send data on the socket
 def send_data(socket, data):
-    print "send_data"
     data = "cs5700fall2013 " + str(data) + "\n"
     return socket.send(data)
 
 # Send the opening "hello" message to start us off
 def send_hello(socket, neuid):
-    print "send_hello"
     return send_data(socket, "HELLO " + neuid)
-
-# Convert the given string representation of the number
-# to a number (int or float)
-def num(s):
-    print "num"
-    try:
-        return int(s)
-    except ValueError:
-        return float(s)
 
 # Calculate the mathematical solution to the problem
 # round down to the nearest integer
 def calculate_solution(left, operator, right):
-    print "calculate_solution"  
-    l = num(left)
-    r = num(right)
+    l = int(left)
+    r = int(right)
     return { 
       '+': lambda: l + r,
       '-': lambda: l - r,
@@ -86,17 +68,15 @@ def main():
     send_hello(socket, args.neuid)
     response = parse_data(recv_data(socket))
     while response:
-      print response
-      if len(response) == 5:
-          solution = calculate_solution(*response[2:])
-          sent_len = send_data(socket, solution)
-      else:
-          print response
-          print "HOORAY"
-          return
-      response = parse_data(recv_data(socket))
-
-    print str(args)
+        print response
+        if len(response) == 5:
+            solution = calculate_solution(*response[2:])
+            sent_len = send_data(socket, solution)
+        else:
+            print "HOORAY"
+            return
+        response = parse_data(recv_data(socket))
+    close_socket()
 
 # These 2 lines allow us to import this file into another file 
 # and test individual components without running it
