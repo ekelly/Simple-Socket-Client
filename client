@@ -31,18 +31,22 @@ def close_socket(socket):
     return
 
 # Parse the socket data
+# Byte array -> string[]
 def parse_data(data):
-    return
+    return data.split(' ')
+
+# Receive data from the socket
+def recv_data(socket):
+    return socket.recv(4096)
 
 # Send data on the socket
 def send_data(socket, data):
     data = "cs5700fall2013 " + data + "\n"
-    return
+    return socket.send(data)
 
 # Send the opening "hello" message to start us off
 def send_hello(socket, neuid):
-    send_data(socket, "HELLO " + neuid)
-    return
+    return send_data(socket, "HELLO " + neuid)
 
 # Convert the given string representation of the number
 # to a number (int or float)
@@ -68,6 +72,17 @@ def main():
     args = parse_input()
     socket = open_socket(args.server, args.port)
     send_hello(socket, args.neuid)
+    response = parse_data(recv_data(socket))
+    while response:
+      print response
+      if len(response) == 5:
+          solution = calculate_solution(*response[2:])
+          sent_len = send_data(socket, solution)
+      else:
+          print "HOORAY"
+          return
+      response = parse_data(recv_data(socket))
+
     print str(args)
 
 # These 2 lines allow us to import this file into another file 
