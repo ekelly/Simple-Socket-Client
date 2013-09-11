@@ -2,6 +2,7 @@
 
 from optparse import OptionParser 
 import socket
+import ssl
 
 # Parse the commandline input into a map of 
 # name to values
@@ -19,11 +20,16 @@ def parse_input():
     else:
         options.server = args[0]
         options.neuid = args[1]
+    if options.ssl:
+        options.port = 27994
+    options.port = int(options.port)
     return options
 
 # Open a socket to the server
-def open_socket(server, port):
+def open_socket(server, port, use_ssl):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    if use_ssl:
+        s = ssl.wrap_socket(s)
     s.settimeout(5)
     s.connect((server, port))
     return s
@@ -64,7 +70,7 @@ def calculate_solution(left, operator, right):
 # Entry point to the program
 def main():
     args = parse_input()
-    socket = open_socket(args.server, args.port)
+    socket = open_socket(args.server, args.port, args.ssl)
     send_hello(socket, args.neuid)
     response = parse_data(recv_data(socket))
     while response:
