@@ -58,6 +58,26 @@ def send_data(socket, data):
 def send_hello(socket, neuid):
     return send_data(socket, "HELLO " + neuid)
 
+# Is the socket message valid according to the given protocal?
+def is_valid_msg(msg):
+    msgLen = len(msg)
+    if msgLen > 2:
+        if msg[0] == "cs5700fall2013":
+            if msgLen == 3:
+                return msg[2] == "BYE\n"
+            elif msgLen == 5:
+                if msg[1] == "STATUS":
+                    # have to chop off last character of msg[4]
+                    # because last character should be \n
+                    if msg[2].isdigit() and msg[4][:-1].isdigit():
+                        if msg[4][-1:] == "\n":
+                            return is_operator(msg[3])
+    return False
+
+# Is this string one of the 4 given mathematical operators?
+def is_operator(op):
+    return op in ["+", "-", "*", "/"]
+
 # Calculate the mathematical solution to the problem
 # round down to the nearest integer
 def calculate_solution(left, operator, right):
@@ -81,14 +101,19 @@ def main():
     # Listen for data and respond appropriately
     response = parse_data(recv_data(socket))
     while response:
-        if len(response) == 5:
-            solution = calculate_solution(*response[2:])
-            sent_len = send_data(socket, solution)
+        if is_valid_msg(response):
+            if len(response) == 5:
+                # feed teh rest of the response data directly
+                # into calculate_solution
+                solution = calculate_solution(*response[2:])
+                sent_len = send_data(socket, solution)
+            else:
+                # Print the secret code
+                print response[1]
+                return
+            response = parse_data(recv_data(socket))
         else:
-            # Print the secret code
-            print response[1]
-            return
-        response = parse_data(recv_data(socket))
+            raise Exception('Bad response', response)
 
     # not necessary, but nice to close the socket
     close_socket(socket)

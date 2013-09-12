@@ -1,6 +1,6 @@
 #!/bin/sh
 
-./client cs5700f13.ccs.neu.edu 000581357 > secret_flags
-./client cs5700f13.ccs.neu.edu 000526758 >> secret_flags
-./client cs5700f13.ccs.neu.edu -s 000581357 >> secret_flags
-./client cs5700f13.ccs.neu.edu -s 000526758 >> secret_flags
+./client cs5700f13.ccs.neu.edu 000581357 > secret_flags2
+./client cs5700f13.ccs.neu.edu 000526758 >> secret_flags2
+./client cs5700f13.ccs.neu.edu -s 000581357 >> secret_flags2
+./client cs5700f13.ccs.neu.edu -s 000526758 >> secret_flags2
