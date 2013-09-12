@@ -1,0 +1,4 @@
+Simple-Socket-Client
+====================
+
+Our high level approach was to separate functionality of our program.  We started by separating out argument parsing into its own function.  The commandline arguments ([port], [ssl], hostname, neuid) needed to be recognized and collected.  Fortunately, Python comes with an option parser which made this very easy!  Second, we defined functions for actions that we knew we would need.  We defined open_socket, close_socket, parse_data, send_data, send_hello, and calculate_solution.  Then, it was a simple matter of filling the functions in!

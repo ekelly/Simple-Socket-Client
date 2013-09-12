@@ -73,17 +73,24 @@ def calculate_solution(left, operator, right):
 # Entry point to the program
 def main():
     args = parse_input()
+
+    # Create a connection to the server
     socket = open_socket(args.server, args.port, args.ssl)
     send_hello(socket, args.neuid)
+
+    # Listen for data and respond appropriately
     response = parse_data(recv_data(socket))
     while response:
         if len(response) == 5:
             solution = calculate_solution(*response[2:])
             sent_len = send_data(socket, solution)
         else:
+            # Print the secret code
             print response[1]
             return
         response = parse_data(recv_data(socket))
+
+    # not necessary, but nice to close the socket
     close_socket(socket)
 
 # These 2 lines allow us to import this file into another file 
