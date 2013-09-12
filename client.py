@@ -77,12 +77,11 @@ def main():
     send_hello(socket, args.neuid)
     response = parse_data(recv_data(socket))
     while response:
-        print response
         if len(response) == 5:
             solution = calculate_solution(*response[2:])
             sent_len = send_data(socket, solution)
         else:
-            print "HOORAY"
+            print response[1]
             return
         response = parse_data(recv_data(socket))
     close_socket(socket)
