@@ -1,4 +1,15 @@
 Simple-Socket-Client
 ====================
 
-Our high level approach was to separate functionality of our program.  We started by separating out argument parsing into its own function.  The commandline arguments ([port], [ssl], hostname, neuid) needed to be recognized and collected.  Fortunately, Python comes with an option parser which made this very easy!  Second, we defined functions for actions that we knew we would need.  We defined open_socket, close_socket, parse_data, send_data, send_hello, and calculate_solution.  Then, it was a simple matter of filling the functions in!  We later went in and nicified the code a little bit, adding in a sanity check that the response data is in the format we expected.  But we didn't run into any problems - we found this to be a very simple assignment (using python helped!)  We tested our code primarily against the cs5700f12 server.  We also tested some individual functions with the built-in python unittest package.
+Our high level approach was to separate functionality of our program.  We
+started by separating our argument parsing into its own function.  The
+commandline arguments ([port], [ssl], hostname, neuid) needed to be recognized
+and collected.  Fortunately, Python comes with an option parser which made this
+very easy!  Second, we defined functions for actions that we knew we would need.
+We defined open_socket, close_socket, parse_data, send_data, send_hello, and
+calculate_solution.  Then, it was a simple matter of filling the functions in!
+We later went in and cleaned the code a little bit, adding in a sanity check
+that the response data is in the format we expected.  But we didn't run into any
+problems - we found this to be a very simple assignment (using python helped!)
+We tested our code primarily against the cs5700f12 server.  We also tested some
+individual functions with the built-in python unittest package.
